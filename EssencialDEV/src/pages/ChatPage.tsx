@@ -4,7 +4,7 @@ import { Textarea } from "../components/ui/textarea";
 import { Button } from "../components/ui/button";
 import { ScrollArea } from "../components/ui/scroll-area";
 import { ThemeToggle } from "../components/shared/ThemeToggle";
-import imgImage from "figma:asset/327e2159df2e53044a7d02bc1650e6f7dc8989d8.png";
+import logo from "../assets/logo.png";
 
 interface Message {
   id: string;
@@ -97,7 +97,7 @@ export function ChatPage({ onNavigate, currentView = 'user', onViewChange }: Cha
           {/* Logo */}
           <div className="h-[58px] w-[237px]">
             <img 
-              src={imgImage} 
+              src={logo} 
               alt="EssencialDEV" 
               className="h-full w-full object-cover"
             />

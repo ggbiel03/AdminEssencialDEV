@@ -1,7 +1,6 @@
 import { Calendar, User } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
 import { Badge } from "../ui/badge";
-import { ImageWithFallback } from "../figma/ImageWithFallback";
 
 export interface BlogPost {
   id: string;
@@ -21,33 +20,40 @@ interface BlogCardProps {
 
 export function BlogCard({ post, onClick }: BlogCardProps) {
   return (
-    <Card 
+    <Card
       className="overflow-hidden hover:shadow-lg transition-all cursor-pointer group focus-ring"
       onClick={onClick}
       role="article"
       tabIndex={0}
-      onKeyDown={(e) => e.key === 'Enter' && onClick()}
+      onKeyDown={(e) => e.key === "Enter" && onClick()}
     >
+      {/* Imagem do post */}
       <div className="aspect-video overflow-hidden">
-        <ImageWithFallback
+        <img
           src={post.image}
           alt={post.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
         />
       </div>
+
+      {/* Conteúdo */}
       <CardContent className="p-6">
+        {/* Categoria */}
         <Badge variant="secondary" className="mb-3">
           {post.category}
         </Badge>
-        
+
+        {/* Título */}
         <h3 className="mb-2 line-clamp-2 group-hover:text-primary transition-colors">
           {post.title}
         </h3>
-        
+
+        {/* Resumo */}
         <p className="text-muted-foreground mb-4 line-clamp-3">
           {post.summary}
         </p>
-        
+
+        {/* Autor, data e tempo de leitura */}
         <div className="flex items-center gap-4 text-sm text-muted-foreground">
           <div className="flex items-center gap-1">
             <User className="h-4 w-4" />

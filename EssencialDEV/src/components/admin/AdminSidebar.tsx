@@ -1,6 +1,6 @@
 import { LayoutDashboard, Users, MessageSquare, Settings, Stethoscope } from "lucide-react";
 import { cn } from "../ui/utils";
-import imgImage1 from "figma:asset/327e2159df2e53044a7d02bc1650e6f7dc8989d8.png";
+import logo from "../../assets/logo.png";
 
 interface AdminSidebarProps {
   activeItem: string;
@@ -18,17 +18,20 @@ const menuItems = [
 export function AdminSidebar({ activeItem, onNavigate }: AdminSidebarProps) {
   return (
     <aside className="w-64 shrink-0 border-r bg-gradient-primary border-white/10 flex flex-col h-full">
-      <div className="p-6 border-b border-white/10 shrink-0">
-        <img src={imgImage1} alt="EssencialDEV" className="h-10" />
+      
+      {/* Logo e título */}
+      <div className="p-6 border-b border-white/10 shrink-0 flex flex-col items-start">
+        <img src={logo} alt="EssencialDEV" className="h-10 w-auto" />
         <p className="text-sm text-white/70 mt-2">Painel Administrativo</p>
       </div>
-      
+
+      {/* Menu */}
       <nav className="flex-1 p-4 overflow-y-auto" aria-label="Menu administrativo">
         <ul className="space-y-1">
           {menuItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeItem === item.id;
-            
+
             return (
               <li key={item.id}>
                 <button
@@ -48,7 +51,8 @@ export function AdminSidebar({ activeItem, onNavigate }: AdminSidebarProps) {
           })}
         </ul>
       </nav>
-      
+
+      {/* Usuário */}
       <div className="p-4 border-t border-white/10 shrink-0">
         <div className="flex items-center gap-3 px-3 py-2">
           <div className="h-8 w-8 rounded-full bg-white/20 flex items-center justify-center shrink-0">

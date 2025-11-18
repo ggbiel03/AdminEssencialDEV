@@ -3,7 +3,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
 import { Switch } from "../components/ui/switch";
-import imgImage1 from "figma:asset/327e2159df2e53044a7d02bc1650e6f7dc8989d8.png";
+import logo from "../assets/logo.png";
 
 interface LoginPageProps {
   onLogin: () => void;
@@ -25,7 +25,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
       {/* Left Side - Gradient */}
       <div className="w-1/2 bg-gradient-primary flex flex-col items-center justify-center px-16 relative">
         <div className="absolute top-8 left-8">
-          <img src={imgImage1} alt="EssencialDEV" className="h-14" />
+          <img src={logo} alt="EssencialDEV" className="h-14" />
         </div>
         
         <div className="max-w-md text-center">

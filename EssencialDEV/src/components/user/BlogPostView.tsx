@@ -1,7 +1,6 @@
 import { ArrowLeft, Calendar, Clock, User } from "lucide-react";
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
-import { ImageWithFallback } from "../figma/ImageWithFallback";
 import { BlogPost } from "./BlogCard";
 import { Separator } from "../ui/separator";
 import { Card, CardContent } from "../ui/card";
@@ -16,11 +15,7 @@ interface BlogPostViewProps {
 export function BlogPostView({ post, onBack, relatedPosts, onPostClick }: BlogPostViewProps) {
   return (
     <div className="max-w-4xl mx-auto">
-      <Button
-        variant="ghost"
-        onClick={onBack}
-        className="mb-6"
-      >
+      <Button variant="ghost" onClick={onBack} className="mb-6">
         <ArrowLeft className="h-4 w-4 mr-2" />
         Voltar
       </Button>
@@ -59,7 +54,7 @@ export function BlogPostView({ post, onBack, relatedPosts, onPostClick }: BlogPo
           </div>
           
           <div className="aspect-video overflow-hidden rounded-lg mb-8">
-            <ImageWithFallback
+            <img
               src={post.image}
               alt={post.title}
               className="w-full h-full object-cover"
@@ -69,30 +64,24 @@ export function BlogPostView({ post, onBack, relatedPosts, onPostClick }: BlogPo
 
         <div className="prose prose-lg max-w-none mb-12" style={{ maxWidth: '70ch' }}>
           <p className="lead">{post.summary}</p>
-          
           <h2 id="introducao">Introdução</h2>
           <p>
             A telemedicina revolucionou a forma como acessamos cuidados de saúde. Com a evolução da tecnologia,
             consultas médicas à distância se tornaram cada vez mais eficientes e acessíveis, permitindo que
             pacientes recebam atendimento de qualidade sem sair de casa.
           </p>
-          
           <h2 id="beneficios">Benefícios da Telemedicina</h2>
-          <p>
-            Entre as principais vantagens da telemedicina, destacam-se:
-          </p>
+          <p>Entre as principais vantagens da telemedicina, destacam-se:</p>
           <ul>
             <li>Acesso facilitado a especialistas, independentemente da localização geográfica</li>
             <li>Redução de custos com deslocamento e tempo de espera</li>
             <li>Maior comodidade para pacientes com mobilidade reduzida</li>
             <li>Acompanhamento contínuo de condições crônicas</li>
           </ul>
-          
           <blockquote>
             "A telemedicina não apenas facilita o acesso aos cuidados de saúde, mas também promove 
             uma abordagem mais preventiva e personalizada ao bem-estar do paciente."
           </blockquote>
-          
           <h2 id="como-funciona">Como Funciona</h2>
           <p>
             O processo de uma consulta por telemedicina é simples e seguro. Após o agendamento,
@@ -100,7 +89,6 @@ export function BlogPostView({ post, onBack, relatedPosts, onPostClick }: BlogPo
             consulta, o médico pode avaliar sintomas, prescrever medicamentos e solicitar exames
             quando necessário.
           </p>
-          
           <h2 id="conclusao">Conclusão</h2>
           <p>
             A telemedicina veio para ficar e continuará evoluindo. Com investimentos em tecnologia
@@ -141,7 +129,7 @@ export function BlogPostView({ post, onBack, relatedPosts, onPostClick }: BlogPo
                 onClick={() => onPostClick(relatedPost)}
               >
                 <div className="aspect-video overflow-hidden">
-                  <ImageWithFallback
+                  <img
                     src={relatedPost.image}
                     alt={relatedPost.title}
                     className="w-full h-full object-cover"

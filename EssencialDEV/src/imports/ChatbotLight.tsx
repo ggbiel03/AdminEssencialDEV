@@ -1,5 +1,5 @@
 import svgPaths from "./svg-hzyajqhud6";
-import imgImage from "figma:asset/327e2159df2e53044a7d02bc1650e6f7dc8989d8.png";
+import logo from "./asset/logo.png";
 
 function Section() {
   return <div className="absolute left-[1199px] size-0 top-[381.5px]" data-name="Section" />;
@@ -354,7 +354,7 @@ function IconsUserLine1() {
 function Image() {
   return (
     <div className="absolute h-[58px] left-[10px] top-0 w-[237px]" data-name="Image">
-      <img alt="" className="absolute inset-0 max-w-none object-50%-50% object-cover pointer-events-none size-full" src={imgImage} />
+      <img alt="" className="absolute inset-0 max-w-none object-50%-50% object-cover pointer-events-none size-full" src={logo} />
     </div>
   );
 }
