@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Plus, Trash2, Search, ChevronDown, ChevronUp } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../components/ui/table";
@@ -7,6 +7,9 @@ import { Input } from "../components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
 import { Badge } from "../components/ui/badge";
 import React from "react";
+
+// Importo a função fetchUsers para buscar usuários via fetch
+import { fetchUsers } from "../api/users";
 
 type UserProfile = 'Paciente' | 'Médico' | 'Administrador';
 
@@ -23,60 +26,6 @@ interface User {
   createdAt: string;
 }
 
-const generateMockUsers = (): User[] => {
-  const adminNames = ['Thiago', 'Hernan', 'Elias', 'Nathan', 'Gabriel'];
-  const patientNames = [
-    'Ana Silva', 'Carlos Santos', 'Maria Oliveira', 'João Costa', 'Fernanda Lima',
-    'Pedro Souza', 'Juliana Alves', 'Ricardo Mendes', 'Patricia Rocha', 'Lucas Ferreira',
-    'Beatriz Carvalho', 'Amanda Ribeiro', 'Felipe Araújo', 'Larissa Gomes'
-  ];
-  const doctorNames = ['Dr. Roberto Almeida', 'Dra. Claudia Martins', 'Dr. Fernando Silva', 'Dra. Beatriz Costa', 'Dr. Marcelo Ribeiro'];
-  
-  const users: User[] = [];
-  
-  // Adicionar administradores
-  adminNames.forEach((name, i) => {
-    users.push({
-      id: `USR-${String(i + 1).padStart(4, '0')}`,
-      name,
-      email: name.toLowerCase() + '@essencialdev.com',
-      profile: 'Administrador',
-      phone: `(11) 9${String(Math.floor(Math.random() * 90000000) + 10000000)}`,
-      createdAt: `${String(Math.floor(Math.random() * 28) + 1).padStart(2, '0')}/10/2025`,
-    });
-  });
-  
-  // Adicionar médicos
-  doctorNames.forEach((name, i) => {
-    users.push({
-      id: `USR-${String(users.length + 1).padStart(4, '0')}`,
-      name,
-      email: name.toLowerCase().replace(' ', '.').replace('dr.', '').replace('dra.', '').trim() + '@essencialdev.com',
-      profile: 'Médico',
-      phone: `(11) 9${String(Math.floor(Math.random() * 90000000) + 10000000)}`,
-      createdAt: `${String(Math.floor(Math.random() * 28) + 1).padStart(2, '0')}/10/2025`,
-    });
-  });
-  
-  // Adicionar pacientes
-  patientNames.forEach((name, i) => {
-    users.push({
-      id: `USR-${String(users.length + 1).padStart(4, '0')}`,
-      name,
-      email: name.toLowerCase().replace(' ', '.') + '@email.com',
-      profile: 'Paciente',
-      weight: `${Math.floor(Math.random() * 40) + 50} kg`,
-      height: `${Math.floor(Math.random() * 40) + 150} cm`,
-      phone: `(11) 9${String(Math.floor(Math.random() * 90000000) + 10000000)}`,
-      address: `Rua ${['das Flores', 'Paulista', 'Augusta', 'dos Três Irmãos'][Math.floor(Math.random() * 4)]}, ${Math.floor(Math.random() * 1000) + 1}`,
-      birthDate: `${String(Math.floor(Math.random() * 28) + 1).padStart(2, '0')}/${String(Math.floor(Math.random() * 12) + 1).padStart(2, '0')}/19${Math.floor(Math.random() * 40) + 60}`,
-      createdAt: `${String(Math.floor(Math.random() * 28) + 1).padStart(2, '0')}/10/2025`,
-    });
-  });
-  
-  return users;
-};
-
 interface UsersPageProps {
   onNavigate?: (page: string) => void;
   onLogout?: () => void;
@@ -84,10 +33,29 @@ interface UsersPageProps {
 
 export function UsersPage({ onNavigate, onLogout }: UsersPageProps) {
   const [activeMenuItem] = useState('usuarios');
-  const [users, setUsers] = useState<User[]>(generateMockUsers());
+  const [users, setUsers] = useState<User[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterProfile, setFilterProfile] = useState<string>('all');
   const [expandedUserId, setExpandedUserId] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Carregar os usuários do servidor quando o componente montar
+  useEffect(() => {
+    async function loadUsers() {
+      setLoading(true);
+      setError(null);
+      try {
+        const fetchedUsers = await fetchUsers();
+        setUsers(fetchedUsers);
+      } catch (err) {
+        setError("Erro ao carregar usuários.");
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadUsers();
+  }, []);
 
   const handleNavigation = (page: string) => {
     if (onNavigate) {
@@ -97,7 +65,7 @@ export function UsersPage({ onNavigate, onLogout }: UsersPageProps) {
 
   const filteredUsers = users.filter(user => {
     const matchesSearch = user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         user.email.toLowerCase().includes(searchTerm.toLowerCase());
+                          user.email.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesProfile = filterProfile === 'all' || user.profile === filterProfile;
     return matchesSearch && matchesProfile;
   });
@@ -151,6 +119,10 @@ export function UsersPage({ onNavigate, onLogout }: UsersPageProps) {
                       </Select>
                     </div>
                   </div>
+
+                  {/* Loading e erro */}
+                  {loading && <div>Carregando usuários...</div>}
+                  {error && <div className="text-destructive">{error}</div>}
 
                   {/* Tabela com scroll horizontal em telas pequenas */}
                   <div className="rounded-md border overflow-auto">
@@ -261,11 +233,12 @@ export function UsersPage({ onNavigate, onLogout }: UsersPageProps) {
                   </div>
 
                   {/* Mensagem de lista vazia */}
-                  {filteredUsers.length === 0 && (
+                  {!loading && filteredUsers.length === 0 && (
                     <div className="text-center py-12 text-muted-foreground">
                       Nenhum usuário encontrado com os filtros aplicados.
                     </div>
                   )}
+
                 </div>
               </CardContent>
             </Card>
