@@ -26,18 +26,6 @@ export function AdminTopbar({ title, period, onPeriodChange, onLogout }: AdminTo
         </div>
         
         <div className="flex items-center gap-4">
-          {period && onPeriodChange && (
-            <Select value={period} onValueChange={onPeriodChange}>
-              <SelectTrigger className="w-32 focus-ring bg-white/20 border-white/30 text-white" aria-label="Selecionar período">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="hoje">Hoje</SelectItem>
-                <SelectItem value="semana">Semana</SelectItem>
-                <SelectItem value="mes">Mês</SelectItem>
-              </SelectContent>
-            </Select>
-          )}
           
           <ThemeToggle />
           

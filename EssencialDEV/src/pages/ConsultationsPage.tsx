@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { AdminSidebar } from "../components/admin/AdminSidebar";
-import { AdminTopbar } from "../components/admin/AdminTopbar";
 import { Plus, ChevronUp, X, Calendar, Filter } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../components/ui/table";
@@ -96,12 +94,8 @@ export function ConsultationsPage({ onNavigate, onLogout }: ConsultationsPagePro
   ];
 
   return (
-    <div className="flex h-full w-full overflow-hidden">
-      <AdminSidebar activeItem={activeMenuItem} onNavigate={handleNavigation} />
-      
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        <AdminTopbar title="Consultas" onLogout={onLogout} />
-        
+    <div className="flex h-full w-full overflow-hidden">      
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">        
         <main className="flex-1 overflow-auto p-6" role="main">
           <div className="w-full max-w-full space-y-6">
             <Card>

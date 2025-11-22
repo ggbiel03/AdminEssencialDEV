@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
@@ -15,26 +15,38 @@ export function LoginPage({ onLogin }: LoginPageProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
+  // Aplica/remove classe dark no body para Tailwind funcionar em todos os componentes
+  useEffect(() => {
+    if (isDarkMode) {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  }, [isDarkMode]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onLogin();
   };
 
   return (
-    <div className={`w-screen h-screen flex ${isDarkMode ? 'dark' : ''}`}>
+    <div className="w-screen h-screen flex">
       {/* Left Side - Gradient */}
-      <div className="w-1/2 bg-gradient-primary flex flex-col items-center justify-center px-16 relative">
+      <div className="w-1/2 flex flex-col items-center justify-center px-16 relative"
+           style={{
+            background: isDarkMode
+              ? "linear-gradient(135deg, #0e2153 0%, #2c0753 100%)"
+              : "linear-gradient(135deg, #43e8f2 0%, #5977f1 100%)",
+           }}>
         <div className="absolute top-8 left-8">
           <img src={logo} alt="EssencialDEV" className="h-14" />
         </div>
-      
-
         <div className="mt-16 flex items-center justify-center">
-          <img 
-            id="logo" 
-            className="h-full w-full object-contain max-h-[450px] max-w-[450px] transition-opacity ease-in-out duration-700 opacity-100" 
-            alt="Essencial Dev Logo" 
-            src={isDarkMode 
+          <img
+            id="logo"
+            className="h-full w-full object-contain max-h-[450px] max-w-[450px] transition-opacity ease-in-out duration-700 opacity-100"
+            alt="Essencial Dev Logo"
+            src={isDarkMode
               ? "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/g_auto/f_auto/v1761218862/sign-in-dark_vmpcxl.png"
               : "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/g_auto/f_auto/v1761218862/sign-in_eyfjvd.png"
             }
@@ -43,7 +55,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
       </div>
 
       {/* Right Side - Login Form */}
-      <div className="w-1/2 bg-background dark:bg-[#1a1a1a] flex items-center justify-center px-16 relative">
+      <div className="w-1/2 bg-background dark:bg-[#1a1a1a] flex flex-col items-center justify-center px-16 relative">
         <div className="w-full max-w-md">
           <div className="mb-12">
             <p className="text-foreground dark:text-white text-3xl mb-3">
@@ -119,9 +131,9 @@ export function LoginPage({ onLogin }: LoginPageProps) {
           </form>
         </div>
 
-        {/* Dark Mode Toggle */}
-        <div className="absolute bottom-8 right-16 flex items-center gap-3">
-          <span className="text-sm text-[#8c8c8c] dark:text-gray-400">Dark theme</span>
+        {/* Dark Mode Toggle CENTRALIZADO */}
+        <div className="w-full flex justify-center items-center mt-8 gap-3">
+          <span className="text-sm text-[#8c8c8c] dark:text-gray-400">Modo Escuro</span>
           <Switch
             checked={isDarkMode}
             onCheckedChange={setIsDarkMode}

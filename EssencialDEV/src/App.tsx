@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { AdminDashboard } from "./pages/AdminDashboard";
 import { UsersPage } from "./pages/UsersPage";
 import { ChatbotPage } from "./pages/ChatbotPage";
@@ -42,43 +41,39 @@ export default function App() {
           path="/dashboard"
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <AdminDashboard onNavigate={() => {}} onLogout={handleLogout} />
+              <AdminDashboard onLogout={handleLogout} />
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/consultas"
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <ConsultationsPage onNavigate={() => {}} onLogout={handleLogout} />
+              <ConsultationsPage onLogout={handleLogout} />
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/usuarios"
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <UsersPage onNavigate={() => {}} onLogout={handleLogout} />
+              <UsersPage onLogout={handleLogout} />
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/chatbot"
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <ChatbotPage onNavigate={() => {}} onLogout={handleLogout} />
+              <ChatbotPage onLogout={handleLogout} />
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/configuracoes"
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <SettingsPage onNavigate={() => {}} onLogout={handleLogout} />
+              <SettingsPage onLogout={handleLogout} />
             </ProtectedRoute>
           }
         />

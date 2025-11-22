@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { AdminSidebar } from "../components/admin/AdminSidebar";
-import { AdminTopbar } from "../components/admin/AdminTopbar";
 import { 
   Settings, 
   Shield, 
@@ -36,12 +34,8 @@ export function SettingsPage({ onNavigate, onLogout }: SettingsPageProps) {
   };
 
   return (
-    <div className="flex h-full w-full overflow-hidden">
-      <AdminSidebar activeItem={activeMenuItem} onNavigate={handleNavigation} />
-      
+    <div className="flex h-full w-full overflow-hidden">      
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        <AdminTopbar title="Configurações" onLogout={onLogout} />
-        
         <main className="flex-1 overflow-auto p-6" role="main">
           <div className="w-full max-w-full space-y-6">
             
