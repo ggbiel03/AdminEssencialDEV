@@ -47,7 +47,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
         <div className="w-full max-w-md">
           <div className="mb-12">
             <p className="text-foreground dark:text-white text-3xl mb-3">
-              Bem vindo(a) de volta!
+              Bem vindo(a) de volta!!
             </p>
           </div>
 
