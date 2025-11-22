@@ -6,37 +6,28 @@ import { UsersPage } from "./pages/UsersPage";
 import { ChatbotPage } from "./pages/ChatbotPage";
 import { SettingsPage } from "./pages/SettingsPage";
 import { ConsultationsPage } from "./pages/ConsultationsPage";
-import { SchedulingPage } from "./pages/SchedulingPage";
 import { LoginPage } from "./pages/LoginPage";
 import { Toaster } from "./components/ui/sonner";
 
 // Componente para rotas protegidas (precisa estar logado)
-function ProtectedRoute({ children, isLoggedIn }: { children: React.JSX.Element, isLoggedIn: boolean }) {
+function ProtectedRoute({ children, isLoggedIn }: { children: React.JSX.Element; isLoggedIn: boolean }) {
   return isLoggedIn ? children : <Navigate to="/login" replace />;
 }
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [mode, setMode] = useState<"admin" | "user">("admin");
   const navigate = useNavigate();
 
   // Entrar (depois do login)
   const handleLogin = () => {
     setIsLoggedIn(true);
-    navigate(mode === "admin" ? "/dashboard" : "/scheduling");
+    navigate("/dashboard");
   };
 
   // Sair
   const handleLogout = () => {
     setIsLoggedIn(false);
-    setMode("admin");
     navigate("/login");
-  };
-
-  // Troca de modo
-  const handleModeChange = (newMode: "admin" | "user") => {
-    setMode(newMode);
-    if (isLoggedIn) navigate(newMode === "admin" ? "/dashboard" : "/scheduling");
   };
 
   return (
@@ -44,12 +35,7 @@ export default function App() {
       <Toaster />
       <Routes>
         {/* Login page */}
-        <Route
-          path="/login"
-          element={
-            <LoginPage onLogin={handleLogin} />
-          }
-        />
+        <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
 
         {/* Admin páginas protegidas */}
         <Route
@@ -60,6 +46,7 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/consultas"
           element={
@@ -68,6 +55,7 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/usuarios"
           element={
@@ -76,6 +64,7 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/chatbot"
           element={
@@ -84,6 +73,7 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/configuracoes"
           element={
@@ -93,38 +83,16 @@ export default function App() {
           }
         />
 
-        {/* User páginas protegidas */}
-        <Route
-          path="/scheduling"
-          element={
-            <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <SchedulingPage
-                onNavigate={() => {}} 
-                onBack={() => navigate("/dashboard")}
-              />
-            </ProtectedRoute>
-          }
-        />
-
-        {/* Redirecionamento para a página inicial apropriada */}
+        {/* Redirecionamento padrão */}
         <Route
           path="/"
           element={
-            isLoggedIn ? (
-              <Navigate to={mode === "admin" ? "/dashboard" : "/scheduling"} replace />
-            ) : (
-              <Navigate to="/login" replace />
-            )
+            isLoggedIn ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />
           }
         />
 
-        {/* Qualquer outra rota: fallback */}
-        <Route
-          path="*"
-          element={
-            <Navigate to="/" replace />
-          }
-        />
+        {/* Fallback */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </>
   );
