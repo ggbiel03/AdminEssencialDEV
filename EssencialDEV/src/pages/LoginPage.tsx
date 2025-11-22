@@ -27,20 +27,18 @@ export function LoginPage({ onLogin }: LoginPageProps) {
         <div className="absolute top-8 left-8">
           <img src={logo} alt="EssencialDEV" className="h-14" />
         </div>
-        
-        <div className="max-w-md text-center">
-          <h1 className="text-white text-5xl mb-6 leading-tight">
-            Bem vindo(a) de volta!
-          </h1>
-          <p className="text-white/90 text-lg leading-relaxed">
-            Deixe seus exames em dia e mantenha sua saúde sempre em primeiro lugar
-          </p>
-        </div>
+      
 
-        <div className="mt-16 w-56 h-56 bg-white/20 rounded-2xl flex items-center justify-center">
-          <svg className="w-32 h-32 text-white/80" fill="currentColor" viewBox="0 0 224 224">
-            <path d="M196 28H28C12.536 28 0 40.536 0 56v112c0 15.464 12.536 28 28 28h168c15.464 0 28-12.536 28-28V56c0-15.464-12.536-28-28-28zm-14 112L145.6 97.6a5.6 5.6 0 0 0-7.2 0L112 120l-26.4-42.4a5.6 5.6 0 0 0-7.2 0L42 126V56a14 14 0 0 1 14-14h112a14 14 0 0 1 14 14v84zm-112-28a14 14 0 1 0 0-28 14 14 0 0 0 0 28z" />
-          </svg>
+        <div className="mt-16 flex items-center justify-center">
+          <img 
+            id="logo" 
+            className="h-full w-full object-contain max-h-[450px] max-w-[450px] transition-opacity ease-in-out duration-700 opacity-100" 
+            alt="Essencial Dev Logo" 
+            src={isDarkMode 
+              ? "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/g_auto/f_auto/v1761218862/sign-in-dark_vmpcxl.png"
+              : "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/g_auto/f_auto/v1761218862/sign-in_eyfjvd.png"
+            }
+          />
         </div>
       </div>
 
@@ -48,11 +46,8 @@ export function LoginPage({ onLogin }: LoginPageProps) {
       <div className="w-1/2 bg-background dark:bg-[#1a1a1a] flex items-center justify-center px-16 relative">
         <div className="w-full max-w-md">
           <div className="mb-12">
-            <h2 className="text-foreground dark:text-white text-3xl mb-3">
+            <p className="text-foreground dark:text-white text-3xl mb-3">
               Bem vindo(a) de volta!
-            </h2>
-            <p className="text-muted-foreground dark:text-gray-400 text-base">
-              Deixe seus exames em dia.
             </p>
           </div>
 
